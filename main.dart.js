@@ -34842,7 +34842,7 @@ r[7]=e+r[7]>>>0}}
 A.Kp.prototype={}
 A.FN.prototype={
 S(a){var s=null
-return new A.tw(B.P9,"FIFA World Cup 2026\u2122 Hub",A.a0N(B.Z,s,s).a2b(B.z4,A.anj(A.a0N(B.Z,s,s).ok)),!1,s)}}
+return new A.tw(B.P9,"FIFA World Cup 2026 Hub",A.a0N(B.Z,s,s).a2b(B.z4,A.anj(A.a0N(B.Z,s,s).ok)),!1,s)}}
 A.U.prototype={}
 A.wi.prototype={
 am(){return new A.LE()}}
@@ -34960,7 +34960,7 @@ s.l()
 this.RA()},
 S(a){var s=null,r=this.d
 r===$&&A.a()
-return A.qc(r,new A.a1D(this),new A.fb(A.qE(A.kV(A.d([new A.EI(new A.a1E(),B.wq,A.cR("FIFA World Cup 2026\u2122",s,s,A.fe(s,s,s,s,s,s,s,s,s,s,s,this.a.c?22:49,s,s,B.hD,s,s,!0,s,-1,s,s,s,s,s,s),s),s),B.vh,B.O8],t.F),B.aq,B.ap,B.pE),s,s),s))}}
+return A.qc(r,new A.a1D(this),new A.fb(A.qE(A.kV(A.d([new A.EI(new A.a1E(),B.wq,A.cR("FIFA World Cup 2026",s,s,A.fe(s,s,s,s,s,s,s,s,s,s,s,this.a.c?22:49,s,s,B.hD,s,s,!0,s,-1,s,s,s,s,s,s),s),s),B.vh,B.O8],t.F),B.aq,B.ap,B.pE),s,s),s))}}
 A.a1D.prototype={
 $2(a,b){var s=this.a,r=s.f
 r===$&&A.a()
