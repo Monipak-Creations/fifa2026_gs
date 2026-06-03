@@ -16,11 +16,12 @@ class FIFA2026Group {
 class GroupTeamsListWidget extends StatelessWidget {
   final List<FIFA2026Group> groups;
   final bool isMobile;
+  final String selectedTeam;
 
   const GroupTeamsListWidget({
     super.key,
     required this.groups,
-    required this.isMobile,
+    required this.isMobile, required this.selectedTeam,
   });
 
   @override
@@ -84,7 +85,7 @@ class GroupTeamsListWidget extends StatelessWidget {
                           width: 4,
                           height: 14,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF34D399),
+                            color: team == selectedTeam ? CyberTheme.brazilGold : Color(0xFF34D399),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -92,10 +93,10 @@ class GroupTeamsListWidget extends StatelessWidget {
                         Expanded(
                           child: Text(
                             team,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: team == selectedTeam ? CyberTheme.brazilGold : Colors.white,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),

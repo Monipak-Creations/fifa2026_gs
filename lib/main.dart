@@ -1,7 +1,9 @@
 import 'package:fifa2026/utils/cyber_themes.dart';
 import 'package:fifa2026/utils/groups.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const WorldCupHubApp());
@@ -17,9 +19,7 @@ class WorldCupHubApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: CyberTheme.bgMain,
-        textTheme: GoogleFonts.fredokaTextTheme(
-          ThemeData.dark().textTheme,
-        )
+        textTheme: GoogleFonts.fredokaTextTheme(ThemeData.dark().textTheme),
       ),
       home: const WorldCupHubScreen(),
     );
@@ -49,116 +49,846 @@ class Fixture {
 
 // Real database mirror matching the HTML document registry payload
 const List<Fixture> fixturesDatabase = [
-  Fixture(id: 1, date: "12-Jun-26", weekday: "Friday", time: "12:30 AM", group: "Group", matchup: "Mexico vs South Africa"),
-  Fixture(id: 2, date: "12-Jun-26", weekday: "Friday", time: "7:30 AM", group: "Group", matchup: "South Korea vs Czechia"),
-  Fixture(id: 3, date: "13-Jun-26", weekday: "Saturday", time: "12:30 AM", group: "Group", matchup: "Canada vs Bosnia and Herzegovina"),
-  Fixture(id: 4, date: "13-Jun-26", weekday: "Saturday", time: "6:30 AM", group: "Group", matchup: "USA vs Paraguay"),
-  Fixture(id: 5, date: "14-Jun-26", weekday: "Sunday", time: "12:30 AM", group: "Group", matchup: "Qatar vs Switzerland"),
-  Fixture(id: 6, date: "14-Jun-26", weekday: "Sunday", time: "3:30 AM", group: "Group", matchup: "Brazil vs Morocco"),
-  Fixture(id: 7, date: "14-Jun-26", weekday: "Sunday", time: "6:30 AM", group: "Group", matchup: "Haiti vs Scotland"),
-  Fixture(id: 8, date: "14-Jun-26", weekday: "Sunday", time: "9:30 AM", group: "Group", matchup: "Australia vs Türkiye"),
-  Fixture(id: 9, date: "14-Jun-26", weekday: "Sunday", time: "10:30 PM", group: "Group", matchup: "Germany vs Curaçao"),
-  Fixture(id: 10, date: "15-Jun-26", weekday: "Monday", time: "1:30 AM", group: "Group", matchup: "Netherlands vs Japan"),
-  Fixture(id: 11, date: "15-Jun-26", weekday: "Monday", time: "4:30 AM", group: "Group", matchup: "Ivory Coast vs Ecuador"),
-  Fixture(id: 12, date: "15-Jun-26", weekday: "Monday", time: "7:30 AM", group: "Group", matchup: "Sweden vs Tunisia"),
-  Fixture(id: 13, date: "15-Jun-26", weekday: "Monday", time: "9:30 PM", group: "Group", matchup: "Spain vs Cape Verde"),
-  Fixture(id: 14, date: "16-Jun-26", weekday: "Tuesday", time: "12:30 AM", group: "Group", matchup: "Belgium vs Egypt"),
-  Fixture(id: 15, date: "16-Jun-26", weekday: "Tuesday", time: "3:30 AM", group: "Group", matchup: "Uruguay vs Saudi Arabia"),
-  Fixture(id: 16, date: "16-Jun-26", weekday: "Tuesday", time: "6:30 AM", group: "Group", matchup: "Iran vs New Zealand"),
-  Fixture(id: 17, date: "17-Jun-26", weekday: "Wednesday", time: "12:30 AM", group: "Group", matchup: "France vs Senegal"),
-  Fixture(id: 18, date: "17-Jun-26", weekday: "Wednesday", time: "3:30 AM", group: "Group", matchup: "Iraq vs Norway"),
-  Fixture(id: 19, date: "17-Jun-26", weekday: "Wednesday", time: "6:30 AM", group: "Group", matchup: "Argentina vs Algeria"),
-  Fixture(id: 20, date: "17-Jun-26", weekday: "Wednesday", time: "9:30 AM", group: "Group", matchup: "Austria vs Jordan"),
-  Fixture(id: 21, date: "17-Jun-26", weekday: "Wednesday", time: "10:30 PM", group: "Group", matchup: "Portugal vs Congo DR"),
-  Fixture(id: 22, date: "18-Jun-26", weekday: "Thursday", time: "1:30 AM", group: "Group", matchup: "England vs Croatia"),
-  Fixture(id: 23, date: "18-Jun-26", weekday: "Thursday", time: "4:30 AM", group: "Group", matchup: "Ghana vs Panama"),
-  Fixture(id: 24, date: "18-Jun-26", weekday: "Thursday", time: "7:30 AM", group: "Group", matchup: "Uzbekistan vs Colombia"),
-  Fixture(id: 25, date: "18-Jun-26", weekday: "Thursday", time: "9:30 PM", group: "Group", matchup: "Czechia vs South Africa"),
-  Fixture(id: 26, date: "19-Jun-26", weekday: "Friday", time: "12:30 AM", group: "Group", matchup: "Switzerland vs Bosnia and Herzegovina"),
-  Fixture(id: 27, date: "19-Jun-26", weekday: "Friday", time: "3:30 AM", group: "Group", matchup: "Canada vs Qatar"),
-  Fixture(id: 28, date: "19-Jun-26", weekday: "Friday", time: "6:30 AM", group: "Group", matchup: "Mexico vs South Korea"),
-  Fixture(id: 29, date: "20-Jun-26", weekday: "Saturday", time: "12:30 AM", group: "Group", matchup: "USA vs Australia"),
-  Fixture(id: 30, date: "20-Jun-26", weekday: "Saturday", time: "3:30 AM", group: "Group", matchup: "Scotland vs Morocco"),
-  Fixture(id: 31, date: "20-Jun-26", weekday: "Saturday", time: "6:00 AM", group: "Group", matchup: "Brazil vs Haiti"),
-  Fixture(id: 32, date: "20-Jun-26", weekday: "Saturday", time: "8:30 AM", group: "Group", matchup: "Türkiye vs Paraguay"),
-  Fixture(id: 33, date: "20-Jun-26", weekday: "Saturday", time: "10:30 PM", group: "Group", matchup: "Netherlands vs Sweden"),
-  Fixture(id: 34, date: "21-Jun-26", weekday: "Sunday", time: "1:30 AM", group: "Group", matchup: "Germany vs Ivory Coast"),
-  Fixture(id: 35, date: "21-Jun-26", weekday: "Sunday", time: "5:30 AM", group: "Group", matchup: "Ecuador vs Curaçao"),
-  Fixture(id: 36, date: "21-Jun-26", weekday: "Sunday", time: "9:30 AM", group: "Group", matchup: "Tunisia vs Japan"),
-  Fixture(id: 37, date: "21-Jun-26", weekday: "Sunday", time: "9:30 PM", group: "Group", matchup: "Spain vs Saudi Arabia"),
-  Fixture(id: 38, date: "22-Jun-26", weekday: "Monday", time: "12:30 AM", group: "Group", matchup: "Belgium vs Iran"),
-  Fixture(id: 39, date: "22-Jun-26", weekday: "Monday", time: "3:30 AM", group: "Group", matchup: "Uruguay vs Cape Verde"),
-  Fixture(id: 40, date: "22-Jun-26", weekday: "Monday", time: "6:30 AM", group: "Group", matchup: "New Zealand vs Egypt"),
-  Fixture(id: 41, date: "22-Jun-26", weekday: "Monday", time: "10:30 PM", group: "Group", matchup: "Argentina vs Austria"),
-  Fixture(id: 42, date: "23-Jun-26", weekday: "Tuesday", time: "2:30 AM", group: "Group", matchup: "France vs Iraq"),
-  Fixture(id: 43, date: "23-Jun-26", weekday: "Tuesday", time: "5:30 AM", group: "Group", matchup: "Norway vs Senegal"),
-  Fixture(id: 44, date: "23-Jun-26", weekday: "Tuesday", time: "8:30 AM", group: "Group", matchup: "Jordan vs Algeria"),
-  Fixture(id: 45, date: "23-Jun-26", weekday: "Tuesday", time: "10:30 PM", group: "Group", matchup: "Portugal vs Uzbekistan"),
-  Fixture(id: 46, date: "24-Jun-26", weekday: "Wednesday", time: "1:30 AM", group: "Group", matchup: "England vs Ghana"),
-  Fixture(id: 47, date: "24-Jun-26", weekday: "Wednesday", time: "4:30 AM", group: "Group", matchup: "Panama vs Croatia"),
-  Fixture(id: 48, date: "24-Jun-26", weekday: "Wednesday", time: "7:30 AM", group: "Group", matchup: "Colombia vs Congo DR"),
-  Fixture(id: 49, date: "25-Jun-26", weekday: "Thursday", time: "12:30 AM", group: "Group", matchup: "Switzerland vs Canada"),
-  Fixture(id: 50, date: "25-Jun-26", weekday: "Thursday", time: "12:30 AM", group: "Group", matchup: "Bosnia and Herzegovina vs Qatar"),
-  Fixture(id: 51, date: "25-Jun-26", weekday: "Thursday", time: "3:30 AM", group: "Group", matchup: "Morocco vs Haiti"),
-  Fixture(id: 52, date: "25-Jun-26", weekday: "Thursday", time: "3:30 AM", group: "Group", matchup: "Scotland vs Brazil"),
-  Fixture(id: 53, date: "25-Jun-26", weekday: "Thursday", time: "6:30 AM", group: "Group", matchup: "South Africa vs South Korea"),
-  Fixture(id: 54, date: "25-Jun-26", weekday: "Thursday", time: "6:30 AM", group: "Group", matchup: "Czechia vs Mexico"),
-  Fixture(id: 55, date: "26-Jun-26", weekday: "Friday", time: "1:30 PM", group: "Group", matchup: "Curaçao vs Ivory Coast"),
-  Fixture(id: 56, date: "26-Jun-26", weekday: "Friday", time: "1:30 PM", group: "Group", matchup: "Ecuador vs Germany"),
-  Fixture(id: 57, date: "26-Jun-26", weekday: "Friday", time: "4:30 AM", group: "Group", matchup: "Tunisia vs Netherlands"),
-  Fixture(id: 58, date: "26-Jun-26", weekday: "Friday", time: "4:30 AM", group: "Group", matchup: "Japan vs Sweden"),
-  Fixture(id: 59, date: "26-Jun-26", weekday: "Friday", time: "7:30 AM", group: "Group", matchup: "Türkiye vs USA"),
-  Fixture(id: 60, date: "26-Jun-26", weekday: "Friday", time: "7:30 AM", group: "Group", matchup: "Paraguay vs Australia"),
-  Fixture(id: 61, date: "27-Jun-26", weekday: "Saturday", time: "12:30 AM", group: "Group", matchup: "Norway vs France"),
-  Fixture(id: 62, date: "27-Jun-26", weekday: "Saturday", time: "12:30 AM", group: "Group", matchup: "Senegal vs Iraq"),
-  Fixture(id: 63, date: "27-Jun-26", weekday: "Saturday", time: "5:30 AM", group: "Group", matchup: "Cape Verde vs Saudi Arabia"),
-  Fixture(id: 64, date: "27-Jun-26", weekday: "Saturday", time: "5:30 AM", group: "Group", matchup: "Uruguay vs Spain"),
-  Fixture(id: 65, date: "27-Jun-26", weekday: "Saturday", time: "8:30 AM", group: "Group", matchup: "New Zealand vs Belgium"),
-  Fixture(id: 66, date: "27-Jun-26", weekday: "Saturday", time: "8:30 AM", group: "Group", matchup: "Egypt vs Iran"),
-  Fixture(id: 67, date: "28-Jun-26", weekday: "Sunday", time: "2:30 AM", group: "Group", matchup: "Panama vs England"),
-  Fixture(id: 68, date: "28-Jun-26", weekday: "Sunday", time: "2:30 AM", group: "Group", matchup: "Croatia vs Ghana"),
-  Fixture(id: 69, date: "28-Jun-26", weekday: "Sunday", time: "5:00 AM", group: "Group", matchup: "Colombia vs Portugal"),
-  Fixture(id: 70, date: "28-Jun-26", weekday: "Sunday", time: "5:00 AM", group: "Group", matchup: "Congo DR vs Uzbekistan"),
-  Fixture(id: 71, date: "28-Jun-26", weekday: "Sunday", time: "7:30 AM", group: "Group", matchup: "Algeria vs Austria"),
-  Fixture(id: 72, date: "28-Jun-26", weekday: "Sunday", time: "7:30 AM", group: "Group", matchup: "Jordan vs Argentina"),
+  Fixture(
+    id: 1,
+    date: "12-Jun-26",
+    weekday: "Friday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Mexico vs South Africa",
+  ),
+  Fixture(
+    id: 2,
+    date: "12-Jun-26",
+    weekday: "Friday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "South Korea vs Czechia",
+  ),
+  Fixture(
+    id: 3,
+    date: "13-Jun-26",
+    weekday: "Saturday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Canada vs Bosnia and Herzegovina",
+  ),
+  Fixture(
+    id: 4,
+    date: "13-Jun-26",
+    weekday: "Saturday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "USA vs Paraguay",
+  ),
+  Fixture(
+    id: 5,
+    date: "14-Jun-26",
+    weekday: "Sunday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Qatar vs Switzerland",
+  ),
+  Fixture(
+    id: 6,
+    date: "14-Jun-26",
+    weekday: "Sunday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Brazil vs Morocco",
+  ),
+  Fixture(
+    id: 7,
+    date: "14-Jun-26",
+    weekday: "Sunday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "Haiti vs Scotland",
+  ),
+  Fixture(
+    id: 8,
+    date: "14-Jun-26",
+    weekday: "Sunday",
+    time: "9:30 AM",
+    group: "Group",
+    matchup: "Australia vs Türkiye",
+  ),
+  Fixture(
+    id: 9,
+    date: "14-Jun-26",
+    weekday: "Sunday",
+    time: "10:30 PM",
+    group: "Group",
+    matchup: "Germany vs Curaçao",
+  ),
+  Fixture(
+    id: 10,
+    date: "15-Jun-26",
+    weekday: "Monday",
+    time: "1:30 AM",
+    group: "Group",
+    matchup: "Netherlands vs Japan",
+  ),
+  Fixture(
+    id: 11,
+    date: "15-Jun-26",
+    weekday: "Monday",
+    time: "4:30 AM",
+    group: "Group",
+    matchup: "Ivory Coast vs Ecuador",
+  ),
+  Fixture(
+    id: 12,
+    date: "15-Jun-26",
+    weekday: "Monday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Sweden vs Tunisia",
+  ),
+  Fixture(
+    id: 13,
+    date: "15-Jun-26",
+    weekday: "Monday",
+    time: "9:30 PM",
+    group: "Group",
+    matchup: "Spain vs Cape Verde",
+  ),
+  Fixture(
+    id: 14,
+    date: "16-Jun-26",
+    weekday: "Tuesday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Belgium vs Egypt",
+  ),
+  Fixture(
+    id: 15,
+    date: "16-Jun-26",
+    weekday: "Tuesday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Uruguay vs Saudi Arabia",
+  ),
+  Fixture(
+    id: 16,
+    date: "16-Jun-26",
+    weekday: "Tuesday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "Iran vs New Zealand",
+  ),
+  Fixture(
+    id: 17,
+    date: "17-Jun-26",
+    weekday: "Wednesday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "France vs Senegal",
+  ),
+  Fixture(
+    id: 18,
+    date: "17-Jun-26",
+    weekday: "Wednesday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Iraq vs Norway",
+  ),
+  Fixture(
+    id: 19,
+    date: "17-Jun-26",
+    weekday: "Wednesday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "Argentina vs Algeria",
+  ),
+  Fixture(
+    id: 20,
+    date: "17-Jun-26",
+    weekday: "Wednesday",
+    time: "9:30 AM",
+    group: "Group",
+    matchup: "Austria vs Jordan",
+  ),
+  Fixture(
+    id: 21,
+    date: "17-Jun-26",
+    weekday: "Wednesday",
+    time: "10:30 PM",
+    group: "Group",
+    matchup: "Portugal vs Congo DR",
+  ),
+  Fixture(
+    id: 22,
+    date: "18-Jun-26",
+    weekday: "Thursday",
+    time: "1:30 AM",
+    group: "Group",
+    matchup: "England vs Croatia",
+  ),
+  Fixture(
+    id: 23,
+    date: "18-Jun-26",
+    weekday: "Thursday",
+    time: "4:30 AM",
+    group: "Group",
+    matchup: "Ghana vs Panama",
+  ),
+  Fixture(
+    id: 24,
+    date: "18-Jun-26",
+    weekday: "Thursday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Uzbekistan vs Colombia",
+  ),
+  Fixture(
+    id: 25,
+    date: "18-Jun-26",
+    weekday: "Thursday",
+    time: "9:30 PM",
+    group: "Group",
+    matchup: "Czechia vs South Africa",
+  ),
+  Fixture(
+    id: 26,
+    date: "19-Jun-26",
+    weekday: "Friday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Switzerland vs Bosnia and Herzegovina",
+  ),
+  Fixture(
+    id: 27,
+    date: "19-Jun-26",
+    weekday: "Friday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Canada vs Qatar",
+  ),
+  Fixture(
+    id: 28,
+    date: "19-Jun-26",
+    weekday: "Friday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "Mexico vs South Korea",
+  ),
+  Fixture(
+    id: 29,
+    date: "20-Jun-26",
+    weekday: "Saturday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "USA vs Australia",
+  ),
+  Fixture(
+    id: 30,
+    date: "20-Jun-26",
+    weekday: "Saturday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Scotland vs Morocco",
+  ),
+  Fixture(
+    id: 31,
+    date: "20-Jun-26",
+    weekday: "Saturday",
+    time: "6:00 AM",
+    group: "Group",
+    matchup: "Brazil vs Haiti",
+  ),
+  Fixture(
+    id: 32,
+    date: "20-Jun-26",
+    weekday: "Saturday",
+    time: "8:30 AM",
+    group: "Group",
+    matchup: "Türkiye vs Paraguay",
+  ),
+  Fixture(
+    id: 33,
+    date: "20-Jun-26",
+    weekday: "Saturday",
+    time: "10:30 PM",
+    group: "Group",
+    matchup: "Netherlands vs Sweden",
+  ),
+  Fixture(
+    id: 34,
+    date: "21-Jun-26",
+    weekday: "Sunday",
+    time: "1:30 AM",
+    group: "Group",
+    matchup: "Germany vs Ivory Coast",
+  ),
+  Fixture(
+    id: 35,
+    date: "21-Jun-26",
+    weekday: "Sunday",
+    time: "5:30 AM",
+    group: "Group",
+    matchup: "Ecuador vs Curaçao",
+  ),
+  Fixture(
+    id: 36,
+    date: "21-Jun-26",
+    weekday: "Sunday",
+    time: "9:30 AM",
+    group: "Group",
+    matchup: "Tunisia vs Japan",
+  ),
+  Fixture(
+    id: 37,
+    date: "21-Jun-26",
+    weekday: "Sunday",
+    time: "9:30 PM",
+    group: "Group",
+    matchup: "Spain vs Saudi Arabia",
+  ),
+  Fixture(
+    id: 38,
+    date: "22-Jun-26",
+    weekday: "Monday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Belgium vs Iran",
+  ),
+  Fixture(
+    id: 39,
+    date: "22-Jun-26",
+    weekday: "Monday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Uruguay vs Cape Verde",
+  ),
+  Fixture(
+    id: 40,
+    date: "22-Jun-26",
+    weekday: "Monday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "New Zealand vs Egypt",
+  ),
+  Fixture(
+    id: 41,
+    date: "22-Jun-26",
+    weekday: "Monday",
+    time: "10:30 PM",
+    group: "Group",
+    matchup: "Argentina vs Austria",
+  ),
+  Fixture(
+    id: 42,
+    date: "23-Jun-26",
+    weekday: "Tuesday",
+    time: "2:30 AM",
+    group: "Group",
+    matchup: "France vs Iraq",
+  ),
+  Fixture(
+    id: 43,
+    date: "23-Jun-26",
+    weekday: "Tuesday",
+    time: "5:30 AM",
+    group: "Group",
+    matchup: "Norway vs Senegal",
+  ),
+  Fixture(
+    id: 44,
+    date: "23-Jun-26",
+    weekday: "Tuesday",
+    time: "8:30 AM",
+    group: "Group",
+    matchup: "Jordan vs Algeria",
+  ),
+  Fixture(
+    id: 45,
+    date: "23-Jun-26",
+    weekday: "Tuesday",
+    time: "10:30 PM",
+    group: "Group",
+    matchup: "Portugal vs Uzbekistan",
+  ),
+  Fixture(
+    id: 46,
+    date: "24-Jun-26",
+    weekday: "Wednesday",
+    time: "1:30 AM",
+    group: "Group",
+    matchup: "England vs Ghana",
+  ),
+  Fixture(
+    id: 47,
+    date: "24-Jun-26",
+    weekday: "Wednesday",
+    time: "4:30 AM",
+    group: "Group",
+    matchup: "Panama vs Croatia",
+  ),
+  Fixture(
+    id: 48,
+    date: "24-Jun-26",
+    weekday: "Wednesday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Colombia vs Congo DR",
+  ),
+  Fixture(
+    id: 49,
+    date: "25-Jun-26",
+    weekday: "Thursday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Switzerland vs Canada",
+  ),
+  Fixture(
+    id: 50,
+    date: "25-Jun-26",
+    weekday: "Thursday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Bosnia and Herzegovina vs Qatar",
+  ),
+  Fixture(
+    id: 51,
+    date: "25-Jun-26",
+    weekday: "Thursday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Morocco vs Haiti",
+  ),
+  Fixture(
+    id: 52,
+    date: "25-Jun-26",
+    weekday: "Thursday",
+    time: "3:30 AM",
+    group: "Group",
+    matchup: "Scotland vs Brazil",
+  ),
+  Fixture(
+    id: 53,
+    date: "25-Jun-26",
+    weekday: "Thursday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "South Africa vs South Korea",
+  ),
+  Fixture(
+    id: 54,
+    date: "25-Jun-26",
+    weekday: "Thursday",
+    time: "6:30 AM",
+    group: "Group",
+    matchup: "Czechia vs Mexico",
+  ),
+  Fixture(
+    id: 55,
+    date: "26-Jun-26",
+    weekday: "Friday",
+    time: "1:30 PM",
+    group: "Group",
+    matchup: "Curaçao vs Ivory Coast",
+  ),
+  Fixture(
+    id: 56,
+    date: "26-Jun-26",
+    weekday: "Friday",
+    time: "1:30 PM",
+    group: "Group",
+    matchup: "Ecuador vs Germany",
+  ),
+  Fixture(
+    id: 57,
+    date: "26-Jun-26",
+    weekday: "Friday",
+    time: "4:30 AM",
+    group: "Group",
+    matchup: "Tunisia vs Netherlands",
+  ),
+  Fixture(
+    id: 58,
+    date: "26-Jun-26",
+    weekday: "Friday",
+    time: "4:30 AM",
+    group: "Group",
+    matchup: "Japan vs Sweden",
+  ),
+  Fixture(
+    id: 59,
+    date: "26-Jun-26",
+    weekday: "Friday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Türkiye vs USA",
+  ),
+  Fixture(
+    id: 60,
+    date: "26-Jun-26",
+    weekday: "Friday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Paraguay vs Australia",
+  ),
+  Fixture(
+    id: 61,
+    date: "27-Jun-26",
+    weekday: "Saturday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Norway vs France",
+  ),
+  Fixture(
+    id: 62,
+    date: "27-Jun-26",
+    weekday: "Saturday",
+    time: "12:30 AM",
+    group: "Group",
+    matchup: "Senegal vs Iraq",
+  ),
+  Fixture(
+    id: 63,
+    date: "27-Jun-26",
+    weekday: "Saturday",
+    time: "5:30 AM",
+    group: "Group",
+    matchup: "Cape Verde vs Saudi Arabia",
+  ),
+  Fixture(
+    id: 64,
+    date: "27-Jun-26",
+    weekday: "Saturday",
+    time: "5:30 AM",
+    group: "Group",
+    matchup: "Uruguay vs Spain",
+  ),
+  Fixture(
+    id: 65,
+    date: "27-Jun-26",
+    weekday: "Saturday",
+    time: "8:30 AM",
+    group: "Group",
+    matchup: "New Zealand vs Belgium",
+  ),
+  Fixture(
+    id: 66,
+    date: "27-Jun-26",
+    weekday: "Saturday",
+    time: "8:30 AM",
+    group: "Group",
+    matchup: "Egypt vs Iran",
+  ),
+  Fixture(
+    id: 67,
+    date: "28-Jun-26",
+    weekday: "Sunday",
+    time: "2:30 AM",
+    group: "Group",
+    matchup: "Panama vs England",
+  ),
+  Fixture(
+    id: 68,
+    date: "28-Jun-26",
+    weekday: "Sunday",
+    time: "2:30 AM",
+    group: "Group",
+    matchup: "Croatia vs Ghana",
+  ),
+  Fixture(
+    id: 69,
+    date: "28-Jun-26",
+    weekday: "Sunday",
+    time: "5:00 AM",
+    group: "Group",
+    matchup: "Colombia vs Portugal",
+  ),
+  Fixture(
+    id: 70,
+    date: "28-Jun-26",
+    weekday: "Sunday",
+    time: "5:00 AM",
+    group: "Group",
+    matchup: "Congo DR vs Uzbekistan",
+  ),
+  Fixture(
+    id: 71,
+    date: "28-Jun-26",
+    weekday: "Sunday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Algeria vs Austria",
+  ),
+  Fixture(
+    id: 72,
+    date: "28-Jun-26",
+    weekday: "Sunday",
+    time: "7:30 AM",
+    group: "Group",
+    matchup: "Jordan vs Argentina",
+  ),
   // START OF KNOCKOUT TOURNAMENT (ROUND OF 32)
-  Fixture(id: 73, date: "29-Jun-26", weekday: "Monday", time: "12:30 AM", group: "Round of 32", matchup: "2A vs 2B"),
-  Fixture(id: 74, date: "29-Jun-26", weekday: "Monday", time: "10:30 PM", group: "Round of 32", matchup: "1E vs 3ABCDF"),
-  Fixture(id: 75, date: "30-Jun-26", weekday: "Tuesday", time: "2:00 AM", group: "Round of 32", matchup: "1F vs 2C"),
-  Fixture(id: 76, date: "30-Jun-26", weekday: "Tuesday", time: "6:30 AM", group: "Round of 32", matchup: "1C vs 2F"),
-  Fixture(id: 77, date: "30-Jun-26", weekday: "Tuesday", time: "10:30 PM", group: "Round of 32", matchup: "1I vs 3CDFGH"),
-  Fixture(id: 78, date: "01-Jul-26", weekday: "Wednesday", time: "2:30 AM", group: "Round of 32", matchup: "2E vs 2I"),
-  Fixture(id: 79, date: "01-Jul-26", weekday: "Wednesday", time: "6:30 AM", group: "Round of 32", matchup: "1A vs 3CEFHI"),
-  Fixture(id: 80, date: "01-Jul-26", weekday: "Wednesday", time: "9:30 AM", group: "Round of 32", matchup: "1L vs Group 3EHIJK"),
-  Fixture(id: 81, date: "02-Jul-26", weekday: "Thursday", time: "1:30 AM", group: "Round of 32", matchup: "1D vs Group 3BEFIJ"),
-  Fixture(id: 82, date: "02-Jul-26", weekday: "Thursday", time: "5:30 AM", group: "Round of 32", matchup: "1G vs 3AEHIJ"),
-  Fixture(id: 83, date: "03-Jul-26", weekday: "Friday", time: "12:30 AM", group: "Round of 32", matchup: "2K vs 2L"),
-  Fixture(id: 84, date: "03-Jul-26", weekday: "Friday", time: "4:30 AM", group: "Round of 32", matchup: "1H vs 2J"),
-  Fixture(id: 85, date: "03-Jul-26", weekday: "Friday", time: "8:30 AM", group: "Round of 32", matchup: "1B vs 3EFGIJ"),
-  Fixture(id: 86, date: "03-Jul-26", weekday: "Friday", time: "11:30 AM", group: "Round of 32", matchup: "1J vs 2H"),
-  Fixture(id: 87, date: "04-Jul-26", weekday: "Saturday", time: "3:30 AM", group: "Round of 32", matchup: "1K vs 3DEIJL"),
-  Fixture(id: 88, date: "04-Jul-26", weekday: "Saturday", time: "7:00 AM", group: "Round of 32", matchup: "2D vs 2G"),
+  Fixture(
+    id: 73,
+    date: "29-Jun-26",
+    weekday: "Monday",
+    time: "12:30 AM",
+    group: "Round of 32",
+    matchup: "2A vs 2B",
+  ),
+  Fixture(
+    id: 74,
+    date: "29-Jun-26",
+    weekday: "Monday",
+    time: "10:30 PM",
+    group: "Round of 32",
+    matchup: "1E vs 3ABCDF",
+  ),
+  Fixture(
+    id: 75,
+    date: "30-Jun-26",
+    weekday: "Tuesday",
+    time: "2:00 AM",
+    group: "Round of 32",
+    matchup: "1F vs 2C",
+  ),
+  Fixture(
+    id: 76,
+    date: "30-Jun-26",
+    weekday: "Tuesday",
+    time: "6:30 AM",
+    group: "Round of 32",
+    matchup: "1C vs 2F",
+  ),
+  Fixture(
+    id: 77,
+    date: "30-Jun-26",
+    weekday: "Tuesday",
+    time: "10:30 PM",
+    group: "Round of 32",
+    matchup: "1I vs 3CDFGH",
+  ),
+  Fixture(
+    id: 78,
+    date: "01-Jul-26",
+    weekday: "Wednesday",
+    time: "2:30 AM",
+    group: "Round of 32",
+    matchup: "2E vs 2I",
+  ),
+  Fixture(
+    id: 79,
+    date: "01-Jul-26",
+    weekday: "Wednesday",
+    time: "6:30 AM",
+    group: "Round of 32",
+    matchup: "1A vs 3CEFHI",
+  ),
+  Fixture(
+    id: 80,
+    date: "01-Jul-26",
+    weekday: "Wednesday",
+    time: "9:30 AM",
+    group: "Round of 32",
+    matchup: "1L vs Group 3EHIJK",
+  ),
+  Fixture(
+    id: 81,
+    date: "02-Jul-26",
+    weekday: "Thursday",
+    time: "1:30 AM",
+    group: "Round of 32",
+    matchup: "1D vs Group 3BEFIJ",
+  ),
+  Fixture(
+    id: 82,
+    date: "02-Jul-26",
+    weekday: "Thursday",
+    time: "5:30 AM",
+    group: "Round of 32",
+    matchup: "1G vs 3AEHIJ",
+  ),
+  Fixture(
+    id: 83,
+    date: "03-Jul-26",
+    weekday: "Friday",
+    time: "12:30 AM",
+    group: "Round of 32",
+    matchup: "2K vs 2L",
+  ),
+  Fixture(
+    id: 84,
+    date: "03-Jul-26",
+    weekday: "Friday",
+    time: "4:30 AM",
+    group: "Round of 32",
+    matchup: "1H vs 2J",
+  ),
+  Fixture(
+    id: 85,
+    date: "03-Jul-26",
+    weekday: "Friday",
+    time: "8:30 AM",
+    group: "Round of 32",
+    matchup: "1B vs 3EFGIJ",
+  ),
+  Fixture(
+    id: 86,
+    date: "03-Jul-26",
+    weekday: "Friday",
+    time: "11:30 AM",
+    group: "Round of 32",
+    matchup: "1J vs 2H",
+  ),
+  Fixture(
+    id: 87,
+    date: "04-Jul-26",
+    weekday: "Saturday",
+    time: "3:30 AM",
+    group: "Round of 32",
+    matchup: "1K vs 3DEIJL",
+  ),
+  Fixture(
+    id: 88,
+    date: "04-Jul-26",
+    weekday: "Saturday",
+    time: "7:00 AM",
+    group: "Round of 32",
+    matchup: "2D vs 2G",
+  ),
   // ROUND OF 16
-  Fixture(id: 89, date: "04-Jul-26", weekday: "Saturday", time: "10:30 PM", group: "Round of 16", matchup: "Winner Match 74 vs Winner Match 77"),
-  Fixture(id: 90, date: "05-Jul-26", weekday: "Sunday", time: "2:30 AM", group: "Round of 16", matchup: "Winner Match 73 vs Winner Match 75"),
-  Fixture(id: 91, date: "06-Jul-26", weekday: "Monday", time: "1:30 AM", group: "Round of 16", matchup: "Winner Match 76 vs Winner Match 78"),
-  Fixture(id: 92, date: "06-Jul-26", weekday: "Monday", time: "5:30 AM", group: "Round of 16", matchup: "Winner Match 79 vs Winner Match 80"),
-  Fixture(id: 93, date: "07-Jul-26", weekday: "Tuesday", time: "12:30 AM", group: "Round of 16", matchup: "Winner Match 83 vs Winner Match 84"),
-  Fixture(id: 94, date: "07-Jul-26", weekday: "Tuesday", time: "5:30 AM", group: "Round of 16", matchup: "Winner Match 81 vs Winner Match 82"),
-  Fixture(id: 95, date: "07-Jul-26", weekday: "Tuesday", time: "9:30 PM", group: "Round of 16", matchup: "Winner Match 86 vs Winner Match 88"),
-  Fixture(id: 96, date: "08-Jul-26", weekday: "Wednesday", time: "1:30 AM", group: "Round of 16", matchup: "Winner Match 85 vs Winner Match 87"),
+  Fixture(
+    id: 89,
+    date: "04-Jul-26",
+    weekday: "Saturday",
+    time: "10:30 PM",
+    group: "Round of 16",
+    matchup: "Winner Match 74 vs Winner Match 77",
+  ),
+  Fixture(
+    id: 90,
+    date: "05-Jul-26",
+    weekday: "Sunday",
+    time: "2:30 AM",
+    group: "Round of 16",
+    matchup: "Winner Match 73 vs Winner Match 75",
+  ),
+  Fixture(
+    id: 91,
+    date: "06-Jul-26",
+    weekday: "Monday",
+    time: "1:30 AM",
+    group: "Round of 16",
+    matchup: "Winner Match 76 vs Winner Match 78",
+  ),
+  Fixture(
+    id: 92,
+    date: "06-Jul-26",
+    weekday: "Monday",
+    time: "5:30 AM",
+    group: "Round of 16",
+    matchup: "Winner Match 79 vs Winner Match 80",
+  ),
+  Fixture(
+    id: 93,
+    date: "07-Jul-26",
+    weekday: "Tuesday",
+    time: "12:30 AM",
+    group: "Round of 16",
+    matchup: "Winner Match 83 vs Winner Match 84",
+  ),
+  Fixture(
+    id: 94,
+    date: "07-Jul-26",
+    weekday: "Tuesday",
+    time: "5:30 AM",
+    group: "Round of 16",
+    matchup: "Winner Match 81 vs Winner Match 82",
+  ),
+  Fixture(
+    id: 95,
+    date: "07-Jul-26",
+    weekday: "Tuesday",
+    time: "9:30 PM",
+    group: "Round of 16",
+    matchup: "Winner Match 86 vs Winner Match 88",
+  ),
+  Fixture(
+    id: 96,
+    date: "08-Jul-26",
+    weekday: "Wednesday",
+    time: "1:30 AM",
+    group: "Round of 16",
+    matchup: "Winner Match 85 vs Winner Match 87",
+  ),
   // QUARTER-FINALS
-  Fixture(id: 97, date: "10-Jul-26", weekday: "Friday", time: "1:30 AM", group: "Quarter-finals", matchup: "Winner Match 89 vs Winner Match 90"),
-  Fixture(id: 98, date: "11-Jul-26", weekday: "Saturday", time: "12:30 AM", group: "Quarter-finals", matchup: "Winner Match 93 vs Winner Match 94"),
-  Fixture(id: 99, date: "12-Jul-26", weekday: "Sunday", time: "2:30 AM", group: "Quarter-finals", matchup: "Winner Match 91 vs Winner Match 92"),
-  Fixture(id: 100, date: "12-Jul-26", weekday: "Sunday", time: "6:30 AM", group: "Quarter-finals", matchup: "Winner Match 95 vs Winner Match 96"),
+  Fixture(
+    id: 97,
+    date: "10-Jul-26",
+    weekday: "Friday",
+    time: "1:30 AM",
+    group: "Quarter-finals",
+    matchup: "Winner Match 89 vs Winner Match 90",
+  ),
+  Fixture(
+    id: 98,
+    date: "11-Jul-26",
+    weekday: "Saturday",
+    time: "12:30 AM",
+    group: "Quarter-finals",
+    matchup: "Winner Match 93 vs Winner Match 94",
+  ),
+  Fixture(
+    id: 99,
+    date: "12-Jul-26",
+    weekday: "Sunday",
+    time: "2:30 AM",
+    group: "Quarter-finals",
+    matchup: "Winner Match 91 vs Winner Match 92",
+  ),
+  Fixture(
+    id: 100,
+    date: "12-Jul-26",
+    weekday: "Sunday",
+    time: "6:30 AM",
+    group: "Quarter-finals",
+    matchup: "Winner Match 95 vs Winner Match 96",
+  ),
   // SEMI-FINALS
-  Fixture(id: 101, date: "15-Jul-26", weekday: "Wednesday", time: "12:30 AM", group: "Semi-finals", matchup: "Winner Match 97 vs Winner Match 98"),
-  Fixture(id: 102, date: "16-Jul-26", weekday: "Thursday", time: "12:30 AM", group: "Semi-finals", matchup: "Winner Match 99 vs Winner Match 100"),
+  Fixture(
+    id: 101,
+    date: "15-Jul-26",
+    weekday: "Wednesday",
+    time: "12:30 AM",
+    group: "Semi-finals",
+    matchup: "Winner Match 97 vs Winner Match 98",
+  ),
+  Fixture(
+    id: 102,
+    date: "16-Jul-26",
+    weekday: "Thursday",
+    time: "12:30 AM",
+    group: "Semi-finals",
+    matchup: "Winner Match 99 vs Winner Match 100",
+  ),
   // THIRD PLACE PLAYOFF
-  Fixture(id: 103, date: "19-Jul-26", weekday: "Sunday", time: "2:30 AM", group: "Third Place", matchup: "Runner-up Match 101 vs Runner-up Match 102", highlight: 'Bronze'),
+  Fixture(
+    id: 103,
+    date: "19-Jul-26",
+    weekday: "Sunday",
+    time: "2:30 AM",
+    group: "Third Place",
+    matchup: "Runner-up Match 101 vs Runner-up Match 102",
+    highlight: 'Bronze',
+  ),
   // THE FINAL
-  Fixture(id: 104, date: "20-Jul-26", weekday: "Monday", time: "12:30 AM", group: "Final", matchup: "Winner Match 101 vs Winner Match 102", highlight: 'Gold')
+  Fixture(
+    id: 104,
+    date: "20-Jul-26",
+    weekday: "Monday",
+    time: "12:30 AM",
+    group: "Final",
+    matchup: "Winner Match 101 vs Winner Match 102",
+    highlight: 'Gold',
+  ),
 ];
 
 const List<FIFA2026Group> tournamentGroupsDatabase = [
@@ -222,6 +952,7 @@ class WorldCupHubScreen extends StatefulWidget {
 class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
   late String formattedTodayStr;
   late List<Fixture> todaysMatches;
+  String? _myFavTeam;
 
   @override
   void initState() {
@@ -229,9 +960,226 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
     _computeCurrentDateSignature();
   }
 
+  Future<void> _saveFavoriteTeam(String teamName) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_fav_team', teamName);
+    setState(() {
+      _myFavTeam = teamName;
+    });
+  }
+
+  void _showTeamSelectionDialog() {
+    // Dynamically compile a flat, sorted list of all 48 teams from your existing group array
+    final List<String> allTeams =
+        tournamentGroupsDatabase.expand((group) => group.teams).toList()
+          ..sort();
+
+    String? localSelectedTeam;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      // Force them to pick a team to enter the mainframe
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              // Eliminate default white container boxes
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 450),
+                decoration: BoxDecoration(
+                  color: CyberTheme.bgSurface,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: CyberTheme.accentPrimary, width: 2),
+                  // Neon Cyan Frame Border
+                  boxShadow: [
+                    BoxShadow(
+                      color: CyberTheme.accentPrimary.withValues(alpha: 0.3),
+                      blurRadius: 20,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  clipBehavior: Clip.antiAlias,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(
+                                Icons.terminal,
+                                color: CyberTheme.accentPrimary,
+                                size: 24,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "INITIALIZING MATRIX...",
+                                style: TextStyle(
+                                  color: CyberTheme.textSecondary,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            "CHOOSE YOUR TEAM",
+                            style: GoogleFonts.oswald(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.white,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            "Select your favorite national team to calibrate your central database tracking stream.",
+                            style: TextStyle(
+                              color: CyberTheme.textSecondary,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+
+                          // --- Cyber Dropdown UI Wrapper ---
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            decoration: BoxDecoration(
+                              color: CyberTheme.bgSurfaceCard,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: CyberTheme.borderDrop),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: localSelectedTeam,
+                                hint: const Text(
+                                  "SELECT TEAM",
+                                  style: TextStyle(
+                                    color: CyberTheme.textSecondary,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                dropdownColor: CyberTheme.bgSurface,
+                                isExpanded: true,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: CyberTheme.accentPrimary,
+                                ),
+                                style: GoogleFonts.fredoka(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                items: allTeams.map((String team) {
+                                  return DropdownMenuItem<String>(
+                                    value: team,
+                                    child: Text(team),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) {
+                                  setDialogState(() {
+                                    localSelectedTeam = newValue;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 28),
+
+                          // --- Cyberpunk Submit Action Button ---
+                          InkWell(
+                            onTap: localSelectedTeam == null
+                                ? null
+                                : () {
+                                    _saveFavoriteTeam(localSelectedTeam!);
+                                    Navigator.of(context).pop();
+                                  },
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              decoration: BoxDecoration(
+                                gradient: localSelectedTeam == null
+                                    ? null
+                                    : const LinearGradient(
+                                        colors: [
+                                          CyberTheme.accentPrimary,
+                                          Color(0xFF2563EB),
+                                        ],
+                                      ),
+                                color: localSelectedTeam == null
+                                    ? Colors.white10
+                                    : null,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: localSelectedTeam == null
+                                      ? Colors.white10
+                                      : CyberTheme.accentPrimary,
+                                ),
+                                boxShadow: localSelectedTeam == null
+                                    ? []
+                                    : [
+                                        BoxShadow(
+                                          color: CyberTheme.accentPrimary
+                                              .withValues(alpha: 0.4),
+                                          blurRadius: 12,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                              ),
+                              child: Text(
+                                localSelectedTeam == null
+                                    ? "SELECT A TEAM TO CONFIRM"
+                                    : "LOCK IN SELECTION",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: localSelectedTeam == null
+                                      ? Colors.white30
+                                      : Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   void _computeCurrentDateSignature() {
     final now = DateTime.now();
-    final List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    final List<String> months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
     final dayStr = now.day.toString().padLeft(2, '0');
     final monthStr = months[now.month - 1];
@@ -241,7 +1189,9 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
     formattedTodayStr = "$dayStr-$monthStr-$yearShortStr";
 
     // Filters live data items match array
-    todaysMatches = fixturesDatabase.where((m) => m.date == formattedTodayStr).toList();
+    todaysMatches = fixturesDatabase
+        .where((m) => m.date == formattedTodayStr)
+        .toList();
   }
 
   @override
@@ -285,13 +1235,17 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
                       const SizedBox(height: 40),
                       _buildTodayPanel(isMobile),
                       const SizedBox(height: 50),
-                      _buildArchiveTitle(),
+                      _buildArchiveTitle(isMobile),
                       const SizedBox(height: 20),
-                      GroupTeamsListWidget(groups: tournamentGroupsDatabase, isMobile: isMobile),
+                      GroupTeamsListWidget(
+                        groups: tournamentGroupsDatabase,
+                        isMobile: isMobile,
+                        selectedTeam : _myFavTeam ?? ''
+                      ),
                       const SizedBox(height: 20),
                       _buildFixturesView(isMobile),
                       const SizedBox(height: 24),
-                      _buildCopyRightFooter()
+                      _buildCopyRightFooter(),
                     ],
                   ),
                 ),
@@ -316,7 +1270,7 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
             color: Colors.black.withOpacity(0.5),
             blurRadius: 40,
             offset: const Offset(0, 20),
-          )
+          ),
         ],
       ),
       clipBehavior: Clip.antiAlias,
@@ -331,14 +1285,19 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
             child: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF3B82F6), CyberTheme.accentPrimary, Color(0xFFEC4899)],
+                  colors: [
+                    Color(0xFF3B82F6),
+                    CyberTheme.accentPrimary,
+                    Color(0xFFEC4899),
+                  ],
                 ),
               ),
             ),
           ),
 
           Padding(
-            padding: EdgeInsets.all(isMobile ? 16.0 : 30.0), // Smaller padding on mobile
+            padding: EdgeInsets.all(isMobile ? 16.0 : 30.0),
+            // Smaller padding on mobile
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -353,7 +1312,8 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
                         child: Text(
                           "Matches Scheduled Today ($formattedTodayStr)",
                           style: TextStyle(
-                            fontSize: isMobile ? 16 : 20, // Smaller font for tight screens
+                            fontSize: isMobile ? 16 : 20,
+                            // Smaller font for tight screens
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
@@ -376,15 +1336,13 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
                           maxLines: 2,
                         ),
                       ),
-                    ]
+                    ],
                   ],
                 ),
                 SizedBox(height: isMobile ? 16 : 24),
 
                 // Switch State Display Engine
-                hasMatches
-                    ? _buildTodayGrid(isMobile)
-                    : _buildNoMatchesView(),
+                hasMatches ? _buildTodayGrid(isMobile) : _buildNoMatchesView(),
               ],
             ),
           ),
@@ -421,37 +1379,84 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Match #${match.id}", style: const TextStyle(color: CyberTheme.textSecondary, fontSize: 13)),
+                  Text(
+                    "Match #${match.id}",
+                    style: const TextStyle(
+                      color: CyberTheme.textSecondary,
+                      fontSize: 13,
+                    ),
+                  ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.05),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: Colors.white.withOpacity(0.05)),
                     ),
-                    child: Text(match.group, style: const TextStyle(color: Colors.white, fontSize: 12)),
-                  )
+                    child: Text(
+                      match.group,
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Text(teams[0], textAlign: TextAlign.right, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600))),
+                  Expanded(
+                    child: Text(
+                      teams[0],
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: CyberTheme.accentPrimary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Text("VS", style: TextStyle(color: CyberTheme.accentPrimary, fontSize: 12, fontWeight: FontWeight.bold)),
+                      child: const Text(
+                        "VS",
+                        style: TextStyle(
+                          color: CyberTheme.accentPrimary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  Expanded(child: Text(teams[1], textAlign: TextAlign.left, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600))),
+                  Expanded(
+                    child: Text(
+                      teams[1],
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              Text(match.time, style: const TextStyle(color: Color(0xFF38BDF8), fontSize: 16, fontWeight: FontWeight.w700)),
+              Text(
+                match.time,
+                style: const TextStyle(
+                  color: Color(0xFF38BDF8),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ],
           ),
         );
@@ -462,34 +1467,91 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
   Widget _buildNoMatchesView() {
     return Center(
       child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: Column(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: Column(
+          children: [
+            const BouncingEmoji(),
+            const SizedBox(height: 16),
+            const Text(
+              "Looks like it's a match-free day on the schedule today.",
+              style: TextStyle(
+                color: Color(0xFFF43F5E),
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              "Take a break and look over the group tables...",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: CyberTheme.textSecondary, fontSize: 15),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildArchiveTitle(bool isMobile) {
+    if (isMobile) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const BouncingEmoji(),
-          const SizedBox(height: 16),
-          const Text(
-            "Looks like it's a match-free day on the schedule today.",
-            style: TextStyle(color: Color(0xFFF43F5E), fontSize: 24, fontWeight: FontWeight.w600),
+          Text(
+            "All Tournament Group Fixtures",
+            style: TextStyle(
+              fontSize: isMobile ? 20 : 26,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            "Take a break and look over the group tables...",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: CyberTheme.textSecondary, fontSize: 15),
+          InkWell(
+            onTap: () {
+              _showTeamSelectionDialog();
+            },
+            borderRadius: BorderRadius.circular(16),
+            child: SvgPicture.asset(
+              'assets/svg/arrow_next.svg',
+              width: 24,
+              height: 24,
+              colorFilter: const ColorFilter.mode(
+                CyberTheme.accentPrimary,
+                BlendMode.srcIn,
+              ),
+            ),
           ),
         ],
-      ),
-    ),
-    );
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "All Tournament Group Fixtures",
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          GestureDetector(
+            onTap: (){
+              _showTeamSelectionDialog();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: const Text(
+              "Choose your team",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: CyberTheme.accentPrimary,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
   }
-
-  Widget _buildArchiveTitle() {
-    return const Text(
-      "All Tournament Group Fixtures",
-      style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: Colors.white),
-    );
-  }
-
 
   Widget _buildFixturesView(bool isMobile) {
     // 1. Properly group items dynamically by their Group / Stage name
@@ -527,7 +1589,9 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
                 ),
               ),
               ...stageMatches.map((fixture) {
-                Color textColor = _getHighlightColor(fixture.highlight);
+
+                final bool isFavMatch = _myFavTeam != null && fixture.matchup.contains(_myFavTeam!);
+                Color textColor = isFavMatch ? CyberTheme.accentPrimary : _getHighlightColor(fixture.highlight);
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: 12),
@@ -543,17 +1607,40 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Match ${fixture.id}", style: const TextStyle(color: CyberTheme.textSecondary, fontSize: 13)),
-                          Text(fixture.time, style: const TextStyle(color: Color(0xFF38BDF8), fontWeight: FontWeight.bold, fontSize: 13)),
+                          Text(
+                            "Match ${fixture.id}",
+                            style: const TextStyle(
+                              color: CyberTheme.textSecondary,
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            fixture.time,
+                            style: const TextStyle(
+                              color: Color(0xFF38BDF8),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 10),
                       Text(
                         fixture.matchup,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: textColor),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 6),
-                      Text("${fixture.date} (${fixture.weekday})", style: const TextStyle(color: CyberTheme.textSecondary, fontSize: 13)),
+                      Text(
+                        "${fixture.date} (${fixture.weekday})",
+                        style: const TextStyle(
+                          color: CyberTheme.textSecondary,
+                          fontSize: 13,
+                        ),
+                      ),
                     ],
                   ),
                 );
@@ -600,28 +1687,88 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
               ),
               clipBehavior: Clip.antiAlias,
               child: DataTable(
-                headingRowColor: WidgetStateProperty.all(Colors.white.withOpacity(0.02)),
+                headingRowColor: WidgetStateProperty.all(
+                  Colors.white.withOpacity(0.02),
+                ),
                 dataRowMinHeight: 52,
                 dataRowMaxHeight: 52,
                 // Omit the 'GROUP' column entirely since it's now handled by the section title header
                 columns: const [
-                  DataColumn(label: Text('MATCH', style: TextStyle(color: CyberTheme.textSecondary, fontWeight: FontWeight.bold))),
-                  DataColumn(label: Text('DATE', style: TextStyle(color: CyberTheme.textSecondary, fontWeight: FontWeight.bold))),
-                  DataColumn(label: Text('WEEKDAY', style: TextStyle(color: CyberTheme.textSecondary, fontWeight: FontWeight.bold))),
-                  DataColumn(label: Text('TIME (IST)', style: TextStyle(color: CyberTheme.textSecondary, fontWeight: FontWeight.bold))),
-                  DataColumn(label: Text('MATCHUP', style: TextStyle(color: CyberTheme.textSecondary, fontWeight: FontWeight.bold))),
+                  DataColumn(
+                    label: Text(
+                      'MATCH',
+                      style: TextStyle(
+                        color: CyberTheme.textSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'DATE',
+                      style: TextStyle(
+                        color: CyberTheme.textSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'WEEKDAY',
+                      style: TextStyle(
+                        color: CyberTheme.textSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'TIME (IST)',
+                      style: TextStyle(
+                        color: CyberTheme.textSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'MATCHUP',
+                      style: TextStyle(
+                        color: CyberTheme.textSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
                 rows: stageMatches.map((fixture) {
-                  Color rowColor = _getHighlightColor(fixture.highlight);
+
+                  final bool isFavMatch = _myFavTeam != null && fixture.matchup.contains(_myFavTeam!);
+                  Color rowColor = isFavMatch ? Colors.white : _getHighlightColor(fixture.highlight);
                   TextStyle rowStyle = TextStyle(color: rowColor, fontSize: 14);
 
                   return DataRow(
+                    color: isFavMatch
+                        ? WidgetStateProperty.all(CyberTheme.accentPrimary.withValues(alpha: 0.5))
+                        : null,
                     cells: [
                       DataCell(Text(fixture.id.toString(), style: rowStyle)),
                       DataCell(Text(fixture.date, style: rowStyle)),
                       DataCell(Text(fixture.weekday, style: rowStyle)),
-                      DataCell(Text(fixture.time, style: const TextStyle(color: Color(0xFF38BDF8), fontSize: 14))),
-                      DataCell(Text(fixture.matchup, style: rowStyle.copyWith(fontWeight: FontWeight.w600))),
+                      DataCell(
+                        Text(
+                          fixture.time,
+                          style: const TextStyle(
+                            color: Color(0xFF38BDF8),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          fixture.matchup,
+                          style: rowStyle.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ),
                     ],
                   );
                 }).toList(),
@@ -633,7 +1780,6 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
     );
   }
 
-
   Color _getHighlightColor(String highlight) {
     switch (highlight) {
       case 'Gold':
@@ -644,7 +1790,6 @@ class _WorldCupHubScreenState extends State<WorldCupHubScreen> {
         return Colors.white;
     }
   }
-
 }
 
 // --- Pulse Animation Live Engine Dot Component ---
@@ -655,7 +1800,8 @@ class _LiveDot extends StatefulWidget {
   State<_LiveDot> createState() => _LiveDotState();
 }
 
-class _LiveDotState extends State<_LiveDot> with SingleTickerProviderStateMixin {
+class _LiveDotState extends State<_LiveDot>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -667,9 +1813,10 @@ class _LiveDotState extends State<_LiveDot> with SingleTickerProviderStateMixin 
       vsync: this,
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.5, end: 1.1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.5,
+      end: 1.1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -689,7 +1836,11 @@ class _LiveDotState extends State<_LiveDot> with SingleTickerProviderStateMixin 
           color: Color(0xFFEF4444),
           shape: BoxShape.circle,
           boxShadow: [
-            BoxShadow(color: Color(0xFFEF4444), blurRadius: 10, spreadRadius: 2),
+            BoxShadow(
+              color: Color(0xFFEF4444),
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
           ],
         ),
       ),
@@ -706,7 +1857,8 @@ class AnimatedHeader extends StatefulWidget {
   State<AnimatedHeader> createState() => _AnimatedHeaderState();
 }
 
-class _AnimatedHeaderState extends State<AnimatedHeader> with SingleTickerProviderStateMixin {
+class _AnimatedHeaderState extends State<AnimatedHeader>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _slideAnimation;
   late Animation<double> _fadeAnimation;
@@ -776,7 +1928,9 @@ class _AnimatedHeaderState extends State<AnimatedHeader> with SingleTickerProvid
                     colors: [Colors.white, CyberTheme.premiumNeon],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
-                  ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
+                  ).createShader(
+                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                  );
                 },
                 child: Text(
                   'FIFA World Cup 2026',
@@ -805,7 +1959,6 @@ class _AnimatedHeaderState extends State<AnimatedHeader> with SingleTickerProvid
   }
 }
 
-
 class BouncingEmoji extends StatefulWidget {
   const BouncingEmoji({super.key});
 
@@ -813,7 +1966,8 @@ class BouncingEmoji extends StatefulWidget {
   State<BouncingEmoji> createState() => _BouncingEmojiState();
 }
 
-class _BouncingEmojiState extends State<BouncingEmoji> with SingleTickerProviderStateMixin {
+class _BouncingEmojiState extends State<BouncingEmoji>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Offset> _animation;
 
@@ -828,13 +1982,16 @@ class _BouncingEmojiState extends State<BouncingEmoji> with SingleTickerProvider
     )..repeat(reverse: true); // Makes it go up and down continuously
 
     // 2. Define the bounce physics and distance
-    _animation = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(0.0, 0.1), // Moves upward by 30% of its height
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOutQuad, // Smooth acceleration/deceleration
-    ));
+    _animation =
+        Tween<Offset>(
+          begin: Offset.zero,
+          end: const Offset(0.0, 0.1), // Moves upward by 30% of its height
+        ).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Curves.easeInOutQuad, // Smooth acceleration/deceleration
+          ),
+        );
   }
 
   @override
@@ -847,18 +2004,16 @@ class _BouncingEmojiState extends State<BouncingEmoji> with SingleTickerProvider
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _animation,
-      child: const Text(
-        "😴",
-        style: TextStyle(fontSize: 50),
-      ),
+      child: const Text("😴", style: TextStyle(fontSize: 50)),
     );
   }
 }
 
 Widget _buildCopyRightFooter() {
   return Center(
-    child: Text('Copyright © 2026 Monipak Creations', style: TextStyle(
-      color: Colors.grey, fontSize: 14
-    ),),
+    child: Text(
+      'Copyright © 2026 Monipak Creations',
+      style: TextStyle(color: Colors.grey, fontSize: 14),
+    ),
   );
 }
